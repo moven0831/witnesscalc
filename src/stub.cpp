@@ -17,5 +17,7 @@ uint get_size_of_constants() {return 0;}
 
 uint get_size_of_io_map() {return 0;}
 
+uint get_size_of_bus_field_map() {return 0;}
+
 void run(Circom_CalcWit* ctx){
 }
