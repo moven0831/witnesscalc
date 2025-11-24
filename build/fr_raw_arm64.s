@@ -908,7 +908,7 @@ _Fr_rawAnd:
         and x5, x5, x9
         and x6, x6, x10
 
-        and x6, x6, 0x3fffffffffffffff // lboMask
+        and x6, x6, 0xffffffffffffffff // lboMask
 
         adr x11, Fr_rawq
         ldp x12, x13, [x11]
@@ -941,7 +941,7 @@ _Fr_rawOr:
         orr x5, x5, x9
         orr x6, x6, x10
 
-        and x6, x6, 0x3fffffffffffffff // lboMask
+        and x6, x6, 0xffffffffffffffff // lboMask
 
         adr x11, Fr_rawq
         ldp x12, x13, [x11]
@@ -974,7 +974,7 @@ _Fr_rawXor:
         eor x5, x5, x9
         eor x6, x6, x10
 
-        and x6, x6, 0x3fffffffffffffff // lboMask
+        and x6, x6, 0xffffffffffffffff // lboMask
 
         adr x11, Fr_rawq
         ldp x12, x13, [x11]
@@ -1065,7 +1065,7 @@ Fr_rawShl_word_shift_3:
         mov x10, xzr
 
 Fr_rawShl_sub:
-        and x13, x13, 0x3fffffffffffffff // lboMask
+        and x13, x13, 0xffffffffffffffff // lboMask
 
         adr x9, Fr_rawq
         ldp x14, x15, [x9]
@@ -1173,7 +1173,7 @@ _Fr_rawNot:
         mvn x5, x5
         mvn x6, x6
 
-        and x6, x6, 0x3fffffffffffffff // lboMask
+        and x6, x6, 0xffffffffffffffff // lboMask
 
         adr x11, Fr_rawq
         ldp x12, x13, [x11]
@@ -1195,5 +1195,5 @@ _Fr_rawNot:
 
 
         .align 8
-Fr_rawq:    .quad 0x43e1f593f0000001,0x2833e84879b97091,0xb85045b68181585d,0x30644e72e131a029
-Fr_np:      .quad 0xc2e1f593efffffff
+Fr_rawq:    .quad 0xffffffffffffffff,0x00000000ffffffff,0x0000000000000000,0xffffffff00000001
+Fr_np:      .quad 0x1
