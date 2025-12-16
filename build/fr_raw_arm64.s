@@ -908,7 +908,7 @@ _Fr_rawAnd:
         and x5, x5, x9
         and x6, x6, x10
 
-        and x6, x6, 0xffffffffffffffff // lboMask
+        // and x6, x6, 0xffffffffffffffff // lboMask, no-ops
 
         adr x11, Fr_rawq
         ldp x12, x13, [x11]
@@ -941,7 +941,7 @@ _Fr_rawOr:
         orr x5, x5, x9
         orr x6, x6, x10
 
-        and x6, x6, 0xffffffffffffffff // lboMask
+        // and x6, x6, 0xffffffffffffffff // lboMask, no-ops
 
         adr x11, Fr_rawq
         ldp x12, x13, [x11]
@@ -974,7 +974,7 @@ _Fr_rawXor:
         eor x5, x5, x9
         eor x6, x6, x10
 
-        and x6, x6, 0xffffffffffffffff // lboMask
+        // and x6, x6, 0xffffffffffffffff // lboMask, no-ops
 
         adr x11, Fr_rawq
         ldp x12, x13, [x11]
@@ -1065,7 +1065,7 @@ Fr_rawShl_word_shift_3:
         mov x10, xzr
 
 Fr_rawShl_sub:
-        and x13, x13, 0xffffffffffffffff // lboMask
+        // and x13, x13, 0xffffffffffffffff // lboMask, no-ops
 
         adr x9, Fr_rawq
         ldp x14, x15, [x9]
@@ -1173,7 +1173,7 @@ _Fr_rawNot:
         mvn x5, x5
         mvn x6, x6
 
-        and x6, x6, 0xffffffffffffffff // lboMask
+        // and x6, x6, 0xffffffffffffffff // lboMask, no-ops
 
         adr x11, Fr_rawq
         ldp x12, x13, [x11]
