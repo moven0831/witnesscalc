@@ -485,6 +485,7 @@ _Fr_rawMMul:
         adcs  x13, x13, x2
         umulh x3,  x28, x9
         adcs  x14, x14, x3
+        adc   x9,  xzr, xzr
 
         // result >= Fr_rawq
         subs x5, x11, x15
@@ -493,6 +494,9 @@ _Fr_rawMMul:
         sbcs x8, x14, x28
 
         ldr x28, [sp], #16
+
+        // Check 5th limb first - if non-zero, must reduce
+        cbnz  x9, Fr_rawMul_done_s
 
         b.hs Fr_rawMul_done_s
 
@@ -630,12 +634,16 @@ _Fr_rawMMul1:
         adcs  x13, x13, x2
         umulh x3,  x8,  x9
         adcs  x14, x14, x3
+        adc   x9,  xzr, xzr
 
         // result >= Fr_rawq
         subs x5, x11, x15
         sbcs x6, x12, x16
         sbcs x7, x13, x17
-        sbcs x8, x14, x8
+        sbcs x2, x14, x8
+
+        // Check 5th limb first - if non-zero, must reduce
+        cbnz  x9, Fr_rawMul1_done_s
 
         b.hs Fr_rawMul1_done_s
 
@@ -760,12 +768,16 @@ _Fr_rawFromMontgomery:
         adcs  x13, x13, x2
         umulh x3,  x8,  x9
         adcs  x14, x14, x3
+        adc   x9,  xzr, xzr
 
         // result >= Fr_rawq
         subs x5, x11, x15
         sbcs x6, x12, x16
         sbcs x7, x13, x17
-        sbcs x8, x14, x8
+        sbcs x2, x14, x8
+
+        // Check 5th limb first - if non-zero, must reduce
+        cbnz  x9, Fr_rawFromMontgomery_s
 
         b.hs Fr_rawFromMontgomery_s
 
