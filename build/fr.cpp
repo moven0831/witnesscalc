@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gmp.h>
+#include <assert.h>
 #include <string>
-#include <stdexcept>
 
 
 static mpz_t q;
@@ -12,6 +12,7 @@ static mpz_t one;
 static mpz_t mask;
 static size_t nBits;
 static bool initialized = false;
+
 
 void Fr_toMpz(mpz_t r, PFrElement pE) {
     FrElement tmp;
@@ -65,9 +66,8 @@ char *Fr_element2str(PFrElement pE) {
     mpz_t r;
     if (!(pE->type & Fr_LONG)) {
         if (pE->shortVal>=0) {
-            const size_t rLn = 32;
-            char *r = new char[rLn];
-            snprintf(r, rLn, "%d", pE->shortVal);
+            char *r = new char[32];
+            sprintf(r, "%d", pE->shortVal);
             return r;
         } else {
             mpz_init_set_si(r, pE->shortVal);
@@ -163,13 +163,9 @@ void Fr_div(PFrElement r, PFrElement a, PFrElement b) {
 }
 
 void Fr_fail() {
-    throw std::runtime_error("Fr error");
+    assert(false);
 }
 
-void Fr_longErr()
-{
-    Fr_fail();
-}
 
 RawFr::RawFr() {
     Fr_init();
@@ -216,7 +212,7 @@ void RawFr::set(Element &r, int value) {
   }
 
   mpz_export((void *)(r.v), NULL, -1, 8, -1, 0, mr);
-
+      
   for (int i=0; i<Fr_N64; i++) r.v[i] = 0;
   mpz_export((void *)(r.v), NULL, -1, 8, -1, 0, mr);
   Fr_rawToMontgomery(r.v,r.v);
@@ -246,7 +242,7 @@ void RawFr::inv(Element &r, const Element &a) {
     for (int i=0; i<Fr_N64; i++) r.v[i] = 0;
     mpz_export((void *)(r.v), NULL, -1, 8, -1, 0, mr);
 
-    Fr_rawMMul(r.v, r.v,Fr_R3.longVal);
+    Fr_rawMMul(r.v, r.v,Fr_rawR3);
     mpz_clear(mr);
 }
 
@@ -298,11 +294,11 @@ int RawFr::toRprBE(const Element &element, uint8_t *data, int bytes)
 
     mpz_t r;
     mpz_init(r);
-
+  
     toMpz(r, element);
-
-    mpz_export(data, NULL, 1, 8, 1, 0, r);
-
+    
+    mpz_export(data, NULL, 1, bytes, 1, 0, r);
+  
     return Fr_N64 * 8;
 }
 
