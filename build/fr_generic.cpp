@@ -1633,7 +1633,7 @@ static inline void rawShl(FrRawElement r, FrRawElement a, uint64_t b)
         return;
     }
 
-    if (b >= 254)
+    if (b >= 256)
     {
         Fr_rawZero(r);
         return;
@@ -1650,7 +1650,7 @@ static inline void rawShr(FrRawElement r, FrRawElement a, uint64_t b)
         return;
     }
 
-    if (b >= 254)
+    if (b >= 256)
     {
         Fr_rawZero(r);
         return;
@@ -1789,7 +1789,7 @@ static inline void do_shr(PFrElement r, PFrElement a, uint64_t b)
 
 static inline void Fr_shr_big_shift(PFrElement r, PFrElement a, PFrElement b)
 {
-    static FrRawElement max_shift = {254, 0, 0, 0};
+    static FrRawElement max_shift = {256, 0, 0, 0};
 
     FrRawElement shift;
 
@@ -1807,7 +1807,7 @@ static inline void Fr_shr_big_shift(PFrElement r, PFrElement a, PFrElement b)
 
 static inline void Fr_shr_long(PFrElement r, PFrElement a, PFrElement b)
 {
-    static FrRawElement max_shift = {254, 0, 0, 0};
+    static FrRawElement max_shift = {256, 0, 0, 0};
 
     if (Fr_rawCmp(b->longVal, max_shift) >= 0)
     {
@@ -1843,7 +1843,7 @@ void Fr_shr(PFrElement r, PFrElement a, PFrElement b)
         {
             b_shortVal = -b_shortVal;
 
-            if (b_shortVal >= 254)
+            if (b_shortVal >= 256)
             {
                 Fr_setzero(r);
             }
@@ -1852,7 +1852,7 @@ void Fr_shr(PFrElement r, PFrElement a, PFrElement b)
                 do_shl(r, a, b_shortVal);
             }
         }
-        else if (b_shortVal >= 254)
+        else if (b_shortVal >= 256)
         {
             Fr_setzero(r);
         }
@@ -1865,7 +1865,7 @@ void Fr_shr(PFrElement r, PFrElement a, PFrElement b)
 
 static inline void Fr_shl_big_shift(PFrElement r, PFrElement a, PFrElement b)
 {
-    static FrRawElement max_shift = {254, 0, 0, 0};
+    static FrRawElement max_shift = {256, 0, 0, 0};
 
     FrRawElement shift;
 
@@ -1883,7 +1883,7 @@ static inline void Fr_shl_big_shift(PFrElement r, PFrElement a, PFrElement b)
 
 static inline void Fr_shl_long(PFrElement r, PFrElement a, PFrElement b)
 {
-    static FrRawElement max_shift = {254, 0, 0, 0};
+    static FrRawElement max_shift = {256, 0, 0, 0};
 
     if (Fr_rawCmp(b->longVal, max_shift) >= 0)
     {
@@ -1919,7 +1919,7 @@ void Fr_shl(PFrElement r, PFrElement a, PFrElement b)
         {
             b_shortVal = -b_shortVal;
 
-            if (b_shortVal >= 254)
+            if (b_shortVal >= 256)
             {
                 Fr_setzero(r);
             }
@@ -1928,7 +1928,7 @@ void Fr_shl(PFrElement r, PFrElement a, PFrElement b)
                 do_shr(r, a, b_shortVal);
             }
         }
-        else if (b_shortVal >= 254)
+        else if (b_shortVal >= 256)
         {
             Fr_setzero(r);
         }
