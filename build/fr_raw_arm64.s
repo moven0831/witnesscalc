@@ -1046,9 +1046,12 @@ _Fr_rawShr:
         sub    x4,  x4,  x3
 
         lsr    x2,  x2,  #6
-        adr    x5, Fr_rawShr_word_shift
-        ldr    x5, [x5, x2, lsl 3]
-        br     x5
+        cbz    x2, Fr_rawShr_word_shift_0
+        cmp    x2, #1
+        b.eq   Fr_rawShr_word_shift_1
+        cmp    x2, #2
+        b.eq   Fr_rawShr_word_shift_2
+        b      Fr_rawShr_word_shift_3
 
 Fr_rawShr_word_shift_0:
         lsr    x8,  x8,  x3
@@ -1102,13 +1105,6 @@ Fr_rawShr_word_shift_3:
         stp   xzr, xzr, [x0, 16]
         ret
 
-Fr_rawShr_word_shift:
-        .quad Fr_rawShr_word_shift_0
-        .quad Fr_rawShr_word_shift_1
-        .quad Fr_rawShr_word_shift_2
-        .quad Fr_rawShr_word_shift_3
-
-
 Fr_rawShl:
 _Fr_rawShl:
         ldp    x9, x10, [x1]
@@ -1119,9 +1115,12 @@ _Fr_rawShl:
         sub    x4,  x4,  x3
 
         lsr    x2,  x2,  #6
-        adr    x5, Fr_rawShl_word_shift
-        ldr    x5, [x5, x2, lsl 3]
-        br     x5
+        cbz    x2, Fr_rawShl_word_shift_0
+        cmp    x2, #1
+        b.eq   Fr_rawShl_word_shift_1
+        cmp    x2, #2
+        b.eq   Fr_rawShl_word_shift_2
+        b      Fr_rawShl_word_shift_3
 
 Fr_rawShl_word_shift_0:
         lsl   x12, x12,  x3
@@ -1194,12 +1193,6 @@ Fr_rawShl_sub:
         stp   x11, x12, [x0, 16]
 
         ret
-Fr_rawShl_word_shift:
-        .quad Fr_rawShl_word_shift_0
-        .quad Fr_rawShl_word_shift_1
-        .quad Fr_rawShl_word_shift_2
-        .quad Fr_rawShl_word_shift_3
-
 
 
 
